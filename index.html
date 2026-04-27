@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Share Your Experience</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <!-- App Wrapper -->
+  <div class="app" id="app">
+
+    <!-- Header -->
+    <header class="header" id="clientHeader">
+      <div class="header-inner">
+        <div class="logo-wrap" id="logoWrap">
+          <span class="logo-text" id="logoText">⭐</span>
+        </div>
+        <div class="header-text">
+          <h1 class="header-title" id="clientName">Loading…</h1>
+          <p class="header-sub" id="clientTagline">We'd love your feedback</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Step Indicator -->
+    <div class="steps-bar" id="stepsBar">
+      <div class="steps-track">
+        <div class="step-dot active" data-step="1"><span>1</span></div>
+        <div class="step-line"></div>
+        <div class="step-dot" data-step="2"><span>2</span></div>
+        <div class="step-line"></div>
+        <div class="step-dot" data-step="3"><span>3</span></div>
+        <div class="step-line"></div>
+        <div class="step-dot" data-step="4"><span>4</span></div>
+        <div class="step-line"></div>
+        <div class="step-dot" data-step="5"><span>5</span></div>
+        <div class="step-line"></div>
+        <div class="step-dot" data-step="6"><span>6</span></div>
+      </div>
+      <p class="step-label" id="stepLabel">Step 1 of 6</p>
+    </div>
+
+    <!-- Main Card -->
+    <main class="main-card" id="mainCard">
+
+      <!-- STEP 1: Service Selection -->
+      <section class="step-section active" id="step1">
+        <div class="step-header">
+          <div class="step-icon">🛎️</div>
+          <h2 class="step-title">What brought you in today?</h2>
+          <p class="step-desc">Select the service you received</p>
+        </div>
+        <div class="service-grid" id="serviceGrid"></div>
+        <div class="step-footer">
+          <button class="btn btn-primary" id="step1Next" onclick="goToStep(2)" disabled>
+            Continue <span class="btn-arrow">→</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- STEP 2: Emoji Experience -->
+      <section class="step-section" id="step2">
+        <div class="step-header">
+          <div class="step-icon">✨</div>
+          <h2 class="step-title">How was your visit?</h2>
+          <p class="step-desc">Choose what best describes your experience</p>
+        </div>
+        <div class="emoji-grid">
+          <div class="emoji-card" data-value="5" data-word="excellent" onclick="selectEmoji(this)">
+            <div class="emoji-face">😊</div>
+            <div class="emoji-label">Excellent</div>
+          </div>
+          <div class="emoji-card" data-value="4" data-word="great" onclick="selectEmoji(this)">
+            <div class="emoji-face">🙂</div>
+            <div class="emoji-label">Good</div>
+          </div>
+          <div class="emoji-card" data-value="3" data-word="decent" onclick="selectEmoji(this)">
+            <div class="emoji-face">😐</div>
+            <div class="emoji-label">Okay</div>
+          </div>
+          <div class="emoji-card" data-value="2" data-word="average" onclick="selectEmoji(this)">
+            <div class="emoji-face">😕</div>
+            <div class="emoji-label">Poor</div>
+          </div>
+          <div class="emoji-card" data-value="1" data-word="poor" onclick="selectEmoji(this)">
+            <div class="emoji-face">😞</div>
+            <div class="emoji-label">Very Poor</div>
+          </div>
+        </div>
+        <!-- Star Rating -->
+        <div class="star-section">
+          <p class="star-label">Or tap a star rating</p>
+          <div class="star-row" id="starRow">
+            <span class="star" data-val="1" onclick="setStar(1)">★</span>
+            <span class="star" data-val="2" onclick="setStar(2)">★</span>
+            <span class="star" data-val="3" onclick="setStar(3)">★</span>
+            <span class="star" data-val="4" onclick="setStar(4)">★</span>
+            <span class="star" data-val="5" onclick="setStar(5)">★</span>
+          </div>
+        </div>
+        <div class="step-footer two-btn">
+          <button class="btn btn-ghost" onclick="goToStep(1)">← Back</button>
+          <button class="btn btn-primary" id="step2Next" onclick="goToStep(3)" disabled>
+            Continue <span class="btn-arrow">→</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- STEP 3: Highlights -->
+      <section class="step-section" id="step3">
+        <div class="step-header">
+          <div class="step-icon">💬</div>
+          <h2 class="step-title">What stood out?</h2>
+          <p class="step-desc">Select all that apply</p>
+        </div>
+        <div class="highlight-grid" id="highlightGrid"></div>
+        <div class="step-footer two-btn">
+          <button class="btn btn-ghost" onclick="goToStep(2)">← Back</button>
+          <button class="btn btn-primary" id="step3Next" onclick="goToStep(4)" disabled>
+            Continue <span class="btn-arrow">→</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- STEP 4: Recommendation -->
+      <section class="step-section" id="step4">
+        <div class="step-header">
+          <div class="step-icon">🏆</div>
+          <h2 class="step-title">Would you recommend us?</h2>
+          <p class="step-desc">How likely are you to tell others?</p>
+        </div>
+        <div class="rec-grid">
+          <div class="rec-card" data-value="highly recommended" onclick="selectRec(this)">
+            <div class="rec-icon">🎯</div>
+            <div>
+              <div class="rec-label">Absolutely recommend</div>
+              <div class="rec-sub">Best experience — will tell everyone!</div>
+            </div>
+          </div>
+          <div class="rec-card" data-value="recommended" onclick="selectRec(this)">
+            <div class="rec-icon">👍</div>
+            <div>
+              <div class="rec-label">Would recommend</div>
+              <div class="rec-sub">Good experience overall</div>
+            </div>
+          </div>
+          <div class="rec-card" data-value="can be improved" onclick="selectRec(this)">
+            <div class="rec-icon">💭</div>
+            <div>
+              <div class="rec-label">Could be better</div>
+              <div class="rec-sub">Has room for improvement</div>
+            </div>
+          </div>
+        </div>
+        <div class="step-footer two-btn">
+          <button class="btn btn-ghost" onclick="goToStep(3)">← Back</button>
+          <button class="btn btn-primary" id="step4Next" onclick="goToStep(5)" disabled>
+            Continue <span class="btn-arrow">→</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- STEP 5: Personal Message -->
+      <section class="step-section" id="step5">
+        <div class="step-header">
+          <div class="step-icon">✍️</div>
+          <h2 class="step-title">Anything else to add?</h2>
+          <p class="step-desc">Optional — your words make it personal</p>
+        </div>
+        <div class="textarea-wrap">
+          <textarea
+            id="personalMsg"
+            class="textarea"
+            placeholder="e.g. The staff was incredibly warm and made me feel at ease right from the start…"
+            maxlength="250"
+            oninput="updateCharCount()"
+            rows="4"
+          ></textarea>
+          <div class="char-count"><span id="charCount">0</span>/250</div>
+        </div>
+        <div class="step-footer two-btn">
+          <button class="btn btn-ghost" onclick="goToStep(4)">← Back</button>
+          <button class="btn btn-primary" onclick="buildReview(); goToStep(6)">
+            Preview Review <span class="btn-arrow">→</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- STEP 6: Review Preview -->
+      <section class="step-section" id="step6">
+        <div class="step-header">
+          <div class="step-icon">🎉</div>
+          <h2 class="step-title">Your review is ready!</h2>
+          <p class="step-desc">Edit if needed, then post it on Google</p>
+        </div>
+        <div class="review-preview-wrap">
+          <div class="review-stars-display" id="reviewStarsDisplay"></div>
+          <textarea class="review-textarea" id="reviewOutput" rows="7"></textarea>
+          <div class="review-char-count"><span id="reviewCharCount">0</span> characters</div>
+        </div>
+        <div class="google-hint">
+          <div class="google-hint-inner">
+            <span class="google-g">G</span>
+            <span>We'll open Google Reviews — just paste and post!</span>
+          </div>
+        </div>
+        <div class="step-footer cta-footer">
+          <button class="btn btn-cta" id="copyPostBtn" onclick="copyAndRedirect()">
+            <span class="cta-icon">📋</span>
+            Copy &amp; Post Review
+          </button>
+          <button class="btn btn-ghost-sm" onclick="goToStep(5)">← Edit answers</button>
+        </div>
+        <div class="manual-copy" id="manualCopy" style="display:none;">
+          <p>Clipboard not available — please copy the text manually above.</p>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>Powered by <strong>ReviewFlow</strong> · <span id="footerClient"></span></p>
+    </footer>
+
+  </div>
+
+  <script src="client.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
