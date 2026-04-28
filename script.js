@@ -308,7 +308,7 @@ const RF = (() => {
 
   /* ── Init ─────────────────────────────────────────────── */
   function init() {
-    const id    = new URLSearchParams(window.location.search).get("client") || "demo";
+    const id    = new URLSearchParams(window.location.search).get("client") || "saluja";
     state.client = RF_getClient(id);
     _applyBranding();
     _buildServiceChips();
