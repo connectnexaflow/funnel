@@ -17,15 +17,15 @@
 const RF_CLIENTS = {
 
   /* ── DENTAL ─────────────────────────────────────────────── */
-  smilezone: {
-    id:             "smilezone",
-    name:           "SmileZone Dental",
+   saluja: {
+    id:             "saluja",
+    name:           "Saluja Dento Max Fac Centre",
     tagline:        "Painless dentistry, beautiful smiles",
     alternateNames: [
-      "SmileZone",
-      "SmileZone Dental Clinic",
-      "SmileZone Dental Care",
-      "the SmileZone team",
+      "Saluja Dentals",
+      "Saluja Dental Clinic",
+      "Saluja Dental Centre",
+      "the Saluja Dentals team",
     ],
     logoText:    "🦷",
     logo:        null,
@@ -33,9 +33,9 @@ const RF_CLIENTS = {
     primaryDark:  "#0284c7",
     primarySoft:  "rgba(14,165,233,0.10)",
     primaryGlow:  "rgba(14,165,233,0.25)",
-    reviewLink:   "https://g.page/r/demo-smilezone/review",
-    location:     "Mumbai",
-    category:     "dental",
+    reviewLink:   "https://g.page/r/CdpWv0eYAsxQEBM/review",
+    location:     "Kanpur",
+    category:     "Dentist",
     services: [
       "Teeth Cleaning", "Dental Checkup", "Teeth Whitening",
       "Braces / Aligners", "Root Canal", "Tooth Extraction",
@@ -257,5 +257,5 @@ const RF_CLIENTS = {
 
 /* ── Helper ──────────────────────────────────────────────── */
 function RF_getClient(id) {
-  return RF_CLIENTS[id] || RF_CLIENTS.demo;
+  return RF_CLIENTS[id] || RF_CLIENTS.saluja;
 }
