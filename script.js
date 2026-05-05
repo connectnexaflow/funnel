@@ -519,11 +519,8 @@ const RF = (() => {
   }
 
   /* ── Private feedback ─────────────────────────────────── */
- function sharePrivate() {
-  showToast("Opening feedback form…", "info");
-  setTimeout(() => {
-    window.open("https://docs.google.com/forms/d/e/1FAIpQLScSYa1fBgGgaWwbB3Mu-qW1WlmrmAtyEVjrr-KtRCoUvnNPMg/viewform?usp=publish-editor");
-  }, 800);
+function sharePrivate() {
+  window.location.href = "https://docs.google.com/forms/d/e/1FAIpQLScSYa1fBgGgaWwbB3Mu-qW1WlmrmAtyEVjrr-KtRCoUvnNPMg/viewform";
 }
 
   return { init, toStep, setRating, regenerate, onReviewInput, copyAndRedirect, sharePrivate };
