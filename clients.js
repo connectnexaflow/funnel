@@ -34,7 +34,7 @@ const RF_CLIENTS = {
     primarySoft:  "rgba(14,165,233,0.10)",
     primaryGlow:  "rgba(14,165,233,0.25)",
     reviewLink:   "https://g.page/r/CdpWv0eYAsxQEBM/review",
-    location:     "Kanpur",
+    location:     "Ashok Nagar, Kanpur",
     category:     "Dentist",
     services: [
       "Teeth Cleaning", "Dental Checkup", "Teeth Whitening",
