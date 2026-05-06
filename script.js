@@ -308,7 +308,7 @@ const RF = (() => {
 
   /* ── Init ─────────────────────────────────────────────── */
   function init() {
-    const id    = new URLSearchParams(window.location.search).get("client") || "saluja";
+    const id     = new URLSearchParams(window.location.search).get("client") || "saluja";
     state.client = RF_getClient(id);
     _applyBranding();
     _buildServiceChips();
@@ -317,23 +317,26 @@ const RF = (() => {
   }
 
   /* ── Branding ─────────────────────────────────────────── */
-  function _applyBranding() {
-    const c = state.client;
-    const r = document.documentElement;
-    r.style.setProperty("--p",      c.primaryColor);
-    r.style.setProperty("--p-dark", c.primaryDark);
-    r.style.setProperty("--p-soft", c.primarySoft);
-    r.style.setProperty("--p-glow", c.primaryGlow || c.primarySoft);
+function _applyBranding() {
+  const c = state.client;
+  const r = document.documentElement;
+  r.style.setProperty("--p",      c.primaryColor);
+  r.style.setProperty("--p-dark", c.primaryDark);
+  r.style.setProperty("--p-soft", c.primarySoft);
+  r.style.setProperty("--p-glow", c.primaryGlow || c.primarySoft);
 
-    document.getElementById("rfBusinessName").textContent = `Thank you for visiting ${c.name}`;
-    document.getElementById("rfTagline").textContent      = c.tagline || "We'd love your feedback";
-    document.getElementById("rfLogoEmoji").textContent    = c.logoText || "⭐";
+  document.getElementById("rfBusinessName").textContent = `Thank you for visiting ${c.name}`;
+  document.getElementById("rfTagline").textContent      = c.tagline || "We'd love your feedback";
+  document.getElementById("rfLogoEmoji").textContent    = c.logoText || "⭐";
 
-    if (c.logo) {
-      document.getElementById("rfLogoWrap").innerHTML =
-        `<img src="${c.logo}" alt="${c.name}" style="width:100%;height:100%;object-fit:contain;padding:6px;" />`;
-    }
+  if (c.logo) {
+    document.getElementById("rfLogoWrap").innerHTML =
+      `<img src="${c.logo}" alt="${c.name}" style="width:100%;height:100%;object-fit:contain;padding:6px;" />`;
   }
+
+  // Dynamically set emoji aspect labels from client highlights
+
+}
 
   /* ── Service chips ────────────────────────────────────── */
   function _buildServiceChips() {
@@ -341,9 +344,9 @@ const RF = (() => {
     wrap.innerHTML = "";
     state.client.services.forEach((svc, i) => {
       const btn = document.createElement("button");
-      btn.className    = "rf-chip";
-      btn.textContent  = svc;
-      btn.type         = "button";
+      btn.className = "rf-chip";
+      btn.textContent = svc;
+      btn.type = "button";
       btn.style.animationDelay = (i * 0.04) + "s";
       btn.onclick = () => _selectService(svc, btn);
       wrap.appendChild(btn);
@@ -361,18 +364,23 @@ const RF = (() => {
   function setRating(val) {
     state.rating = val;
 
+    // Sync emoji faces
     document.querySelectorAll(".rf-emoji-btn").forEach(btn =>
       btn.classList.toggle("rf-active", +btn.dataset.val === val)
     );
 
+    // Sync stars
     document.querySelectorAll(".rf-star").forEach(s =>
       s.classList.toggle("rf-lit", +s.dataset.val <= val)
     );
 
     const isLow = val <= 2;
-    document.getElementById("rfLowRatingMsg").style.display  = isLow ? "block" : "none";
-    document.getElementById("rfStep2Footer").style.display   = isLow ? "none"  : "flex";
-    document.getElementById("rfStep2Btn").disabled           = false;
+    document.getElementById("rfLowRatingMsg").style.display = isLow ? "block" : "none";
+    document.getElementById("rfStep2Footer").style.display  = isLow ? "none"  : "flex";
+
+    if (!isLow) {
+      document.getElementById("rfStep2Btn").disabled = false;
+    }
   }
 
   /* ── Step Navigation ──────────────────────────────────── */
@@ -380,7 +388,7 @@ const RF = (() => {
     if (!_validateStep(state.step)) return;
 
     const dir = n > state.step ? "forward" : "back";
-    if (n === 3) _buildReviewPreview();
+    if (n === 3) _buildReviewCarousel();
 
     _hideStep(state.step, dir);
     state.step = n;
@@ -431,99 +439,109 @@ const RF = (() => {
     document.getElementById("rfProgressLabel").textContent = `Step ${n} of 3`;
   }
 
-  /* ── Review preview ───────────────────────────────────── */
-  function _buildReviewPreview() {
-    const review = generateReview(state.client, state.service, state.rating);
-    state.review = review;
+  /* ── Build carousel on step 3 ─────────────────────────── */
+  function _buildReviewCarousel() {
+    const carousel = document.getElementById("rfCarousel");
+    const dotsWrap = document.getElementById("rfCarouselDots");
+    if (!carousel) return;
 
-    const ta = document.getElementById("rfReviewText");
-    ta.value = review;
-    _updateCharCount(review.length);
+    carousel.innerHTML = "";
+    if (dotsWrap) dotsWrap.innerHTML = "";
 
     const stars  = "★".repeat(state.rating) + "☆".repeat(5 - state.rating);
     const labels = { 5:"Excellent ✨", 4:"Good 👍", 3:"Okay 🙂", 2:"Poor 😕", 1:"Very Poor 😞" };
-    document.getElementById("rfRatingBadge").innerHTML =
-      `<span style="color:#f59e0b;letter-spacing:3px;font-size:1rem">${stars}</span>
-       <span style="font-size:.82rem;font-weight:700;color:var(--p)">${labels[state.rating]} — ${state.service}</span>`;
-  }
 
-  function regenerate() {
-    const review = generateReview(state.client, state.service, state.rating);
-    state.review = review;
-    const ta = document.getElementById("rfReviewText");
-    ta.value = review;
-    _updateCharCount(review.length);
-    showToast("New version generated ✨", "info");
-  }
-
-  function onReviewInput() {
-    const ta = document.getElementById("rfReviewText");
-    state.review = ta.value;
-    _updateCharCount(ta.value.length);
-  }
-
-  function _updateCharCount(n) {
-    const el = document.getElementById("rfCharCount");
-    el.textContent = n;
-    el.style.color = n > 900 ? "var(--danger)" : n > 700 ? "var(--warn)" : "";
-  }
-
-  /* ── Copy + Redirect ──────────────────────────────────── */
-  async function copyAndRedirect() {
-    const review = document.getElementById("rfReviewText").value.trim();
-    if (!review) {
-      showToast("Review is empty — add some text first", "error");
-      return;
+    const badge = document.getElementById("rfRatingBadge");
+    if (badge) {
+      badge.innerHTML =
+        `<span style="color:#f59e0b;letter-spacing:3px;font-size:1rem">${stars}</span>
+         <span style="font-size:.82rem;font-weight:700;color:var(--p)">${labels[state.rating]} — ${state.service}</span>`;
     }
 
-    const btn = document.getElementById("rfCopyBtn");
-    btn.classList.add("rf-loading");
-    btn.innerHTML = `
-      <svg viewBox="0 0 20 20" fill="none" width="18" height="18">
-        <circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.9" stroke-dasharray="22">
-          <animateTransform attributeName="transform" type="rotate" dur=".8s"
-            values="0 10 10;360 10 10" repeatCount="indefinite"/>
-        </circle>
-      </svg> Copying…`;
+    // Generate 3 review variants
+    const reviews = [];
+    for (let i = 0; i < 3; i++) {
+      reviews.push(generateReview(state.client, state.service, state.rating));
+    }
+    state.review = reviews[0];
 
-    const restoreBtn = () => {
-      btn.classList.remove("rf-loading");
-      btn.innerHTML = `
-        <svg viewBox="0 0 20 20" fill="none" width="17" height="17">
-          <rect x="7" y="7" width="10" height="11" rx="2" stroke="currentColor" stroke-width="1.9"/>
-          <path d="M13 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
-        </svg> Copy &amp; Post on Google`;
-    };
+    reviews.forEach((text, i) => {
+      // Card
+      const card = document.createElement("div");
+      card.className = "rf-review-card";
+      card.innerHTML = `
+        <div class="rf-card-copied-overlay">
+          <span class="rf-copied-icon">✅</span>
+          <span class="rf-copied-text">Copied! Opening Google…</span>
+        </div>
+        <div class="rf-card-header">
+          <span class="rf-card-num">Option ${i + 1}</span>
+          <span class="rf-card-tap">
+            <svg width="13" height="13" viewBox="0 0 20 20" fill="none">
+              <rect x="7" y="7" width="10" height="11" rx="2" stroke="currentColor" stroke-width="1.9"/>
+              <path d="M13 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
+            </svg>
+            Tap to post
+          </span>
+        </div>
+        <p class="rf-card-text">${text}</p>
+        <div class="rf-card-footer">
+          <span class="rf-card-stars">${stars}</span>
+        </div>`;
 
+      card.onclick = () => _copyCard(card, text);
+      carousel.appendChild(card);
+
+      // Dot
+      if (dotsWrap) {
+        const dot = document.createElement("div");
+        dot.className = "rf-dot" + (i === 0 ? " rf-dot-active" : "");
+        dot.onclick = () => {
+          carousel.scrollTo({ left: card.offsetLeft - 4, behavior: "smooth" });
+        };
+        dotsWrap.appendChild(dot);
+      }
+    });
+
+    // Update dots on scroll
+    carousel.addEventListener("scroll", () => {
+      const dots = dotsWrap ? dotsWrap.querySelectorAll(".rf-dot") : [];
+      const index = Math.round(carousel.scrollLeft / carousel.offsetWidth);
+      dots.forEach((d, i) => d.classList.toggle("rf-dot-active", i === index));
+    });
+  }
+
+  async function _copyCard(card, text) {
+    card.classList.add("rf-card-copying");
     try {
-      await navigator.clipboard.writeText(review);
-      btn.innerHTML = "✅ Copied! Redirecting…";
-      showToast("Copied! Opening Google Reviews…", "success");
-      setTimeout(() => {
-        window.open(state.client.reviewLink, "_blank");
-        restoreBtn();
-      }, 1100);
+      await navigator.clipboard.writeText(text);
     } catch {
       try {
-        const ta = document.getElementById("rfReviewText");
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
         ta.select();
         document.execCommand("copy");
-        showToast("Copied! Opening Google…", "success");
-        setTimeout(() => window.open(state.client.reviewLink, "_blank"), 1100);
+        document.body.removeChild(ta);
       } catch {
         document.getElementById("rfManualFallback").style.display = "block";
-        showToast("Please copy the text manually", "error");
+        card.classList.remove("rf-card-copying");
+        return;
       }
-      restoreBtn();
     }
+    showToast("Copied! Opening Google Reviews…", "success");
+    setTimeout(() => {
+      window.open(state.client.reviewLink, "_blank");
+      card.classList.remove("rf-card-copying");
+    }, 1200);
   }
 
   /* ── Private feedback ─────────────────────────────────── */
-function sharePrivate() {
-  window.location.href = "https://docs.google.com/forms/d/e/1FAIpQLScSYa1fBgGgaWwbB3Mu-qW1WlmrmAtyEVjrr-KtRCoUvnNPMg/viewform";
-}
+  function sharePrivate() {
+    showToast("Private feedback form coming soon 🙏", "info");
+  }
 
-  return { init, toStep, setRating, regenerate, onReviewInput, copyAndRedirect, sharePrivate };
+  return { init, toStep, setRating, sharePrivate };
 })();
 
 /* ── Toast ────────────────────────────────────────────────── */
