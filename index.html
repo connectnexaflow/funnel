@@ -9,7 +9,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
-  <link rel="icon" type="image/png" href="salujaicon.png">
 </head>
 <body>
 
@@ -58,133 +57,110 @@
         </button>
       </div>
     </section>
+   
+<!-- STEP 2: RATING -->
+<section class="rf-step rf-step-hidden" id="rfStep2">
+  <div class="rf-step-header">
+    <span class="rf-step-eyebrow">02 &mdash; Rating</span>
+    <h2 class="rf-step-title">How was your experience?</h2>
+    <p class="rf-step-sub">Be honest — it helps us improve</p>
+  </div>
 
-    <!-- STEP 2: RATING -->
-    <section class="rf-step rf-step-hidden" id="rfStep2">
-      <div class="rf-step-header">
-        <span class="rf-step-eyebrow">02 &mdash; Rating</span>
-        <h2 class="rf-step-title">How was your experience?</h2>
-        <p class="rf-step-sub">Be honest — it helps us improve</p>
+  <!-- 5 EMOJI FACES -->
+  <div class="rf-emoji-row" id="rfEmojiRow">
+    <button class="rf-emoji-btn" data-val="5" onclick="RF.setRating(5)">
+      <span class="rf-emoji-face">😊</span>
+      <span class="rf-emoji-lbl">Excellent</span>
+    </button>
+    <button class="rf-emoji-btn" data-val="4" onclick="RF.setRating(4)">
+      <span class="rf-emoji-face">😀</span>
+      <span class="rf-emoji-lbl">Good</span>
+    </button>
+    <button class="rf-emoji-btn" data-val="3" onclick="RF.setRating(3)">
+      <span class="rf-emoji-face">😐</span>
+      <span class="rf-emoji-lbl">Okay</span>
+    </button>
+    <button class="rf-emoji-btn" data-val="2" onclick="RF.setRating(2)">
+      <span class="rf-emoji-face">😟</span>
+      <span class="rf-emoji-lbl">Poor</span>
+    </button>
+    <button class="rf-emoji-btn" data-val="1" onclick="RF.setRating(1)">
+      <span class="rf-emoji-face">😞</span>
+      <span class="rf-emoji-lbl">Very poor</span>
+    </button>
+  </div>
+
+  <!-- OR PICK A STAR -->
+  <p class="rf-or-label">OR PICK A STAR RATING</p>
+  <div class="rf-star-box">
+    <div class="rf-star-row" id="rfStarRow">
+      <button class="rf-star" data-val="1" onclick="RF.setRating(1)">★</button>
+      <button class="rf-star" data-val="2" onclick="RF.setRating(2)">★</button>
+      <button class="rf-star" data-val="3" onclick="RF.setRating(3)">★</button>
+      <button class="rf-star" data-val="4" onclick="RF.setRating(4)">★</button>
+      <button class="rf-star" data-val="5" onclick="RF.setRating(5)">★</button>
+    </div>
+  </div>
+
+  <!-- Low rating message -->
+  <div class="rf-lowrating-msg" id="rfLowRatingMsg" style="display:none">
+    <div class="rf-lowrating-inner">
+      <span class="rf-lowrating-icon">💙</span>
+      <div>
+        <p class="rf-lowrating-title">Sorry your experience wasn't great</p>
+        <p class="rf-lowrating-sub">Your honest feedback helps us do better.</p>
       </div>
+    </div>
+    <div class="rf-lowrating-btns">
+      <button class="rf-btn-low rf-btn-low-private" onclick="RF.sharePrivate()">Share feedback privately</button>
+    </div>
+  </div>
 
-      <div class="rf-emoji-row" id="rfEmojiRow">
-        <button class="rf-emoji-btn" data-val="5" onclick="RF.setRating(5)">
-          <span class="rf-emoji-face">😊</span>
-          <span class="rf-emoji-lbl">Excellent</span>
-        </button>
-        <button class="rf-emoji-btn" data-val="4" onclick="RF.setRating(4)">
-          <span class="rf-emoji-face">🙂</span>
-          <span class="rf-emoji-lbl">Good</span>
-        </button>
-        <button class="rf-emoji-btn" data-val="3" onclick="RF.setRating(3)">
-          <span class="rf-emoji-face">😐</span>
-          <span class="rf-emoji-lbl">Okay</span>
-        </button>
-        <button class="rf-emoji-btn" data-val="2" onclick="RF.setRating(2)">
-          <span class="rf-emoji-face">😕</span>
-          <span class="rf-emoji-lbl">Poor</span>
-        </button>
-        <button class="rf-emoji-btn" data-val="1" onclick="RF.setRating(1)">
-          <span class="rf-emoji-face">😞</span>
-          <span class="rf-emoji-lbl">Very Poor</span>
-        </button>
-      </div>
+  <div class="rf-step-footer rf-two-col" id="rfStep2Footer">
+    <button class="rf-btn rf-btn-ghost" onclick="RF.toStep(1)">← Back</button>
+    <button class="rf-btn rf-btn-primary" id="rfStep2Btn" onclick="RF.toStep(3)" disabled>
+      Build My Review
+      <svg class="rf-btn-arrow" viewBox="0 0 20 20" fill="none">
+        <path d="M4 10h12M12 6l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+</section>
 
-      <div class="rf-star-wrap">
-        <p class="rf-star-label">Or pick a star rating</p>
-        <div class="rf-star-row" id="rfStarRow" aria-label="Star rating">
-          <button class="rf-star" data-val="1" onclick="RF.setRating(1)" aria-label="1 star">★</button>
-          <button class="rf-star" data-val="2" onclick="RF.setRating(2)" aria-label="2 stars">★</button>
-          <button class="rf-star" data-val="3" onclick="RF.setRating(3)" aria-label="3 stars">★</button>
-          <button class="rf-star" data-val="4" onclick="RF.setRating(4)" aria-label="4 stars">★</button>
-          <button class="rf-star" data-val="5" onclick="RF.setRating(5)" aria-label="5 stars">★</button>
-        </div>
-      </div>
-
-      <!-- Low rating message -->
-      <div class="rf-lowrating-msg" id="rfLowRatingMsg" style="display:none">
-        <div class="rf-lowrating-inner">
-          <span class="rf-lowrating-icon">💙</span>
-          <div>
-            <p class="rf-lowrating-title">Sorry your experience wasn't great</p>
-            <p class="rf-lowrating-sub">Your honest feedback helps us do better. You can still post on Google, or share privately with the team.</p>
-          </div>
-        </div>
-        <div class="rf-lowrating-btns">
-          <button class="rf-btn-low rf-btn-low-private" onclick="RF.sharePrivate()">Share feedback</button>
-        </div>
-      </div>
-
-      <div class="rf-step-footer rf-two-col" id="rfStep2Footer">
-        <button class="rf-btn rf-btn-ghost" onclick="RF.toStep(1)">← Back</button>
-        <button class="rf-btn rf-btn-primary" id="rfStep2Btn" onclick="RF.toStep(3)" disabled>
-          Build My Review
-          <svg class="rf-btn-arrow" viewBox="0 0 20 20" fill="none">
-            <path d="M4 10h12M12 6l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-      </div>
-    </section>
-
-    <!-- STEP 3: REVIEW -->
+    <!-- STEP 3: REVIEW CAROUSEL -->
     <section class="rf-step rf-step-hidden" id="rfStep3">
       <div class="rf-step-header">
         <span class="rf-step-eyebrow">03 &mdash; Review</span>
-        <h2 class="rf-step-title">Your review is ready 🎉</h2>
-        <p class="rf-step-sub">Edit freely, then post it on Google</p>
+        <h2 class="rf-step-title">Pick your review 🎉</h2>
+        <p class="rf-step-sub">Swipe to browse · Tap one to post it on Google</p>
       </div>
 
       <div class="rf-rating-badge" id="rfRatingBadge"></div>
 
-      <div class="rf-review-box">
-        <label class="rf-review-label" for="rfReviewText">Your Review</label>
-        <textarea
-          class="rf-review-textarea"
-          id="rfReviewText"
-          rows="6"
-          maxlength="1000"
-          placeholder="Your review will appear here…"
-          oninput="RF.onReviewInput()"
-          aria-label="Review text"
-        ></textarea>
-        <div class="rf-review-meta">
-          <button class="rf-regen-btn" onclick="RF.regenerate()" title="Generate a different version">
-            <svg viewBox="0 0 20 20" fill="none" width="13" height="13">
-              <path d="M4 4v4h4M16 16v-4h-4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M16 8A6 6 0 0 0 5.5 5.5L4 7M4 12a6 6 0 0 0 10.5 2.5L16 13" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            Try another version
-          </button>
-          <span class="rf-char-count"><span id="rfCharCount">0</span> / 1000</span>
-        </div>
+      <!-- Swipeable review cards -->
+      <div class="rf-carousel-wrap">
+        <div class="rf-carousel" id="rfCarousel"></div>
+        <div class="rf-carousel-dots" id="rfCarouselDots"></div>
       </div>
 
       <div class="rf-google-hint">
         <span class="rf-google-dots">
           <span style="color:#4285F4">●</span><span style="color:#EA4335">●</span><span style="color:#FBBC05">●</span><span style="color:#34A853">●</span>
         </span>
-        <span>Opening Google Reviews — just paste &amp; submit</span>
+        <span>Tap a card to copy &amp; open Google Reviews instantly</span>
       </div>
 
       <div class="rf-step-footer rf-cta-footer">
-        <button class="rf-btn rf-btn-cta" id="rfCopyBtn" onclick="RF.copyAndRedirect()">
-          <svg viewBox="0 0 20 20" fill="none" width="17" height="17">
-            <rect x="7" y="7" width="10" height="11" rx="2" stroke="currentColor" stroke-width="1.9"/>
-            <path d="M13 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
-          </svg>
-          Copy &amp; Post on Google
-        </button>
-        <button class="rf-btn rf-btn-ghost-sm" onclick="RF.toStep(2)">← Change rating</button>
+        <button class="rf-btn rf-btn-ghost-sm" onclick="RF.toStep(2)">← Change aspect</button>
       </div>
 
       <div class="rf-manual-fallback" id="rfManualFallback" style="display:none">
-        <p>⚠️ Auto-copy failed — select the text above and copy manually (Ctrl+A → Ctrl+C).</p>
+        <p>⚠️ Auto-copy failed — select the text in the card and copy manually (Ctrl+A → Ctrl+C).</p>
       </div>
     </section>
 
   </div>
 
-  <!-- clients.js lives in root, not config/ -->
   <script src="clients.js"></script>
   <script src="script.js"></script>
 </body>
