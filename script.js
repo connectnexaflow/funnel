@@ -13,8 +13,9 @@ const chance = p => Math.random() < p;
    ═══════════════════════════════════════════════════════════ */
 const PHRASES = {
 
-  /* ── INTROS ─────────────────────────────────────────────── */
+/* ── INTROS ─────────────────────────────────────────────── */
   intro: [
+    /* English */
     n => `Just visited ${n} and wanted to share my experience.`,
     n => `Went to ${n} recently and felt it deserved a proper review.`,
     n => `Had a visit to ${n} last week — here's what I thought.`,
@@ -30,6 +31,20 @@ const PHRASES = {
     n => `My visit to ${n} was memorable for the right reasons.`,
     n => `I was a little hesitant before visiting ${n}, but I'm glad I went.`,
     n => `${n} came up as a suggestion and it really did not disappoint.`,
+
+    /* Hinglish */
+    n => `Kaafi time se ek acha dentist dhoondh raha tha Kanpur mein — ${n} mein aake bahut acha laga.`,
+    n => `Ek dost ne ${n} suggest kiya tha, aur bilkul sahi kiya.`,
+    n => `Pehli baar ${n} gaya tha, lekin experience itna acha tha ki review likhna zaruri laga.`,
+    n => `Suna tha ${n} ke baare mein, aaj khud ja ke dekha — disappointed nahi hua.`,
+    n => `${n} ka naam kuch logo ne suggest kiya tha — finally visit kiya aur acha laga.`,
+    n => `Bahut dino se dant ka dard tha, ${n} gaya aur bahut relief mila.`,
+    n => `Pehle thoda hesitation tha, par ${n} jaake pata chala ye sach mein ek acha clinic hai.`,
+
+    /* Hindi */
+    n => `${n} mein apna anubhav sabke saath share karna chahta tha.`,
+    n => `Kai logo ki salah par ${n} gaya — aur wakai achha laga.`,
+    n => `Pehli baar ${n} gaya tha, lekin treatment aur staff dono ne bahut accha impression chhoda.`,
   ],
 
   /* ── SERVICE EXPERIENCE (per rating) ────────────────────── */
@@ -52,6 +67,12 @@ const PHRASES = {
       (s,n) => `Came in for ${s} — left completely impressed by the quality of care.`,
       (s,n) => `The ${s} service here sets a high bar. Really satisfied.`,
       (s,n) => `${n} really nailed the ${s} — thorough, precise, and comfortable.`,
+      /* "best of" GBP boosters — fire occasionally via the pool rotation */
+      (s,n) => `If you're looking for the best dentist in Kanpur for ${s}, this is genuinely it.`,
+      (s,n) => `Came in for ${s} — honestly the best dental experience I've had in Kanpur.`,
+      (s,n) => `I've visited a few clinics in Kanpur but ${n} is clearly the best dental clinic for ${s}.`,
+      (s,n) => `For ${s} in Kanpur, I don't think you'll find better than this.`,
+      (s,n) => `The ${s} here reminded me why people call this the best dentist in Kanpur.`,
     ],
     4: [
       (s,n) => `The ${s} was done really well and I'm happy with the outcome.`,
@@ -155,6 +176,14 @@ const PHRASES = {
       () => `Felt comfortable and in good hands the whole time.`,
       () => `No unnecessary waiting, no confusion — just good service.`,
       () => `It's the kind of experience that makes you want to come back.`,
+      /* "best of" boosters */
+      () => `Easily the best dental clinic in Kanpur I've been to.`,
+      () => `I've been to a few dentists around Kanpur — none come close to this level.`,
+      n => `${n} has earned its reputation as one of the best dental clinics in Kanpur.`,
+      () => `Genuinely the best dentist in Kanpur for anyone who values quality care.`,
+      () => `This is what trusted dental care in Kanpur actually looks like.`,
+      () => `Sabse acha dental clinic Kanpur mein — no doubt about it.`,
+      () => `Kanpur mein itna acha dentist milna mushkil hai — bahut impressed tha.`,
     ],
     neutral: [
       n => `${n} has the basics right, but a few things could be refined.`,
@@ -175,6 +204,7 @@ const PHRASES = {
   /* ── CLOSINGS ────────────────────────────────────────────── */
   closing: {
     positive: [
+      /* English */
       n => `Would definitely recommend ${n} to anyone looking for this kind of service.`,
       n => `Highly recommend ${n} — a genuinely great experience.`,
       n => `If you're in the area and need this service, ${n} is a solid choice.`,
@@ -190,7 +220,38 @@ const PHRASES = {
       () => `Happy to recommend this to friends and family.`,
       () => `Will be returning and will be bringing friends along too.`,
       () => `Solid, reliable, and worth every rupee.`,
+
+      /* Hinglish */
+      n => `Main definitely ${n} ko apne doston aur family ko recommend karunga.`,
+      n => `${n} ek baar zaroor visit karein — bahut acha experience raha.`,
+      () => `Bilkul recommend karunga — paisa aur time dono worth it tha.`,
+      () => `Agli baar bhi yahi aaunga, aur saath mein kisi ko bhi le aaunga.`,
+      () => `Sach mein bahut acha experience raha — highly recommended.`,
+
+      /* Hindi */
+      n => `Main ${n} ko zaroor recommend karunga apne parichit logo ko.`,
+      () => `Yahan ka anubhav bahut achha raha — dobara aana pakka hai.`,
+      () => `Bahut santushti mili — aage bhi yahaan hi aaunga.`,
     ],
+   geo: [
+      (n, area) => `If you're anywhere in ${area} or nearby, this is honestly the best dental clinic in Kanpur to visit.`,
+      (n, area) => `Best dentist I've found in Kanpur — and I've tried a few around ${area}.`,
+      (n, area) => `People in ${area} are lucky to have a clinic like this so close.`,
+      (n, area) => `Would recommend to anyone around ${area} looking for good dental care in Kanpur.`,
+      (n, area) => `Genuinely one of the best dental clinics in Kanpur — worth the trip even from ${area}.`,
+      (n, area) => `Asked around in ${area} for a good dentist and this name kept coming up — now I know why.`,
+      (n, area) => `${area} walon ke liye to yeh best dental clinic in Kanpur hai — ekdum sahi jagah.`,
+      (n, area) => `Maine ${area} aur aas paas kai clinics try kiye — yahan jaisa koi nahi.`,
+      () => `Honestly the best dental experience I've had in Kanpur.`,
+      () => `If you're looking for a trusted dentist in Kanpur, look no further.`,
+      () => `The kind of clinic that makes you proud to say it's in Kanpur.`,
+      () => `Hard to find dental care this good anywhere in Kanpur — really impressed.`,
+      () => `Poore Kanpur mein best dentist — yahan ek baar zaroor aana chahiye.`,
+      () => `Kanpur ka sabse acha dental clinic — yeh kehna galat nahi hoga.`,
+      () => `Best dental clinic in Kanpur — hands down, no second thoughts.`,
+      () => `Trusted dental care in Kanpur — this place sets the standard.`,
+    ],
+
     neutral: [
       n => `${n} is okay for a quick visit — just manage expectations a bit.`,
       () => `Might give it another try with adjusted expectations.`,
@@ -221,7 +282,151 @@ const PHRASES = {
 };
 
 /* ═══════════════════════════════════════════════════════════
+   SERVICE → SEO KEYWORD MAP
+   Each service has 2–4 natural keyword phrases that rotate.
+   One fires ~35% of the time inside the experience sentence.
+   Keep them conversational — never paste raw keyword strings.
+   ═══════════════════════════════════════════════════════════ */
+const SERVICE_KEYWORDS = {
+
+  /* — General & Preventive — */
+  "Dental Checkup": [
+    "dental checkup in Kanpur",
+    "thorough dental consultation in Kanpur",
+    "routine dental exam here in Kanpur",
+  ],
+  "Teeth Scaling & Polishing": [
+    "teeth scaling and polishing in Kanpur",
+    "professional teeth cleaning in Kanpur",
+    "scaling treatment at this dental clinic in Kanpur",
+  ],
+  "Dental X-Ray / Digital Scan": [
+    "digital dental X-ray in Kanpur",
+    "dental scan here in Kanpur",
+    "digital X-ray at this clinic in Kanpur",
+  ],
+
+  /* — Restorative — */
+  "Cavity Filling": [
+    "cavity filling in Kanpur",
+    "tooth filling at this dental clinic",
+    "dental filling here in Kanpur",
+  ],
+  "Root Canal (Single Sitting)": [
+    "single sitting root canal in Kanpur",
+    "painless root canal treatment in Kanpur",
+    "RCT in a single sitting here in Kanpur",
+    "painless RCT at this clinic in Kanpur",
+  ],
+  "Dental Crown & Bridge": [
+    "dental crown and bridge in Kanpur",
+    "zirconia crown in Kanpur",
+    "PFM crown treatment here in Kanpur",
+    "crown and bridge work at this dental clinic in Kanpur",
+  ],
+  "Full Mouth Rehabilitation": [
+    "full mouth rehabilitation in Kanpur",
+    "complete dental restoration in Kanpur",
+    "full mouth treatment at this clinic in Kanpur",
+  ],
+
+  /* — Surgical — */
+  "Tooth Extraction": [
+    "painless tooth extraction in Kanpur",
+    "tooth removal here in Kanpur",
+    "painless extraction at this dental clinic in Kanpur",
+  ],
+  "Wisdom Tooth Removal": [
+    "wisdom tooth removal in Kanpur",
+    "painless wisdom tooth extraction in Kanpur",
+    "wisdom tooth surgery here in Kanpur",
+  ],
+  "Emergency / Tooth Pain": [
+    "emergency dentist in Kanpur",
+    "urgent dental care in Kanpur",
+    "tooth pain treatment here in Kanpur",
+    "emergency dental clinic in Kanpur",
+  ],
+
+  /* — Cosmetic — */
+  "Teeth Whitening": [
+    "teeth whitening in Kanpur",
+    "professional teeth whitening in Kanpur",
+    "cosmetic whitening treatment here in Kanpur",
+  ],
+  "Dental Veneers": [
+    "dental veneers in Kanpur",
+    "smile veneers at this clinic in Kanpur",
+    "porcelain veneers here in Kanpur",
+  ],
+  "Smile Design": [
+    "smile design in Kanpur",
+    "smile makeover at this dental clinic in Kanpur",
+    "cosmetic dentist in Kanpur",
+    "smile designing here in Kanpur",
+  ],
+  "Laser Dentistry": [
+    "laser dentistry in Kanpur",
+    "laser dental treatment here in Kanpur",
+    "laser gum treatment at this clinic in Kanpur",
+  ],
+
+  /* — Orthodontic — */
+  "Braces / Aligners": [
+    "braces treatment in Kanpur",
+    "dental aligners in Kanpur",
+    "orthodontic treatment here in Kanpur",
+  ],
+  "Invisible Aligners": [
+    "invisible aligners in Kanpur",
+    "Invisalign treatment in Kanpur",
+    "clear aligners at this dental clinic in Kanpur",
+  ],
+
+  /* — Implants & Prosthetics — */
+  "Dental Implants": [
+    "dental implants in Kanpur",
+    "tooth implant here in Kanpur",
+    "dental implant procedure in Kanpur",
+  ],
+  "Dentures / Artificial Teeth": [
+    "dentures in Kanpur",
+    "artificial teeth fitting here in Kanpur",
+    "denture clinic in Kanpur",
+  ],
+
+  /* — Specialty — */
+  "Pediatric Dentist": [
+    "pediatric dentist in Kanpur",
+    "child dentist in Kanpur",
+    "kids dental treatment here in Kanpur",
+    "dentist for children in Kanpur",
+  ],
+  "Gum Treatment / Pyorrhea": [
+    "gum treatment in Kanpur",
+    "pyorrhea treatment here in Kanpur",
+    "gum disease treatment at this dental clinic in Kanpur",
+  ],
+  "Jaw Pain / TMJ Treatment": [
+    "TMJ treatment in Kanpur",
+    "jaw pain treatment here in Kanpur",
+    "TMJ disorder clinic in Kanpur",
+  ],
+};
+
+/* Returns a keyword phrase for a service, or falls back to the bare service name */
+function _servicePhrase(service) {
+  const pool = SERVICE_KEYWORDS[service];
+  if (pool && chance(0.35)) return pick(pool);
+  return service;
+}
+
+/* ═══════════════════════════════════════════════════════════
    REVIEW GENERATOR
+   3 modes picked randomly:
+     short  (30%) — 2 sentences only, no highlights
+     medium (45%) — intro + experience + 1 highlight + closing
+     long   (25%) — intro + experience + 2 highlights + second sentence + closing
    ═══════════════════════════════════════════════════════════ */
 function generateReview(client, service, rating) {
   const name      = pick(client.alternateNames);
@@ -230,43 +435,53 @@ function generateReview(client, service, rating) {
   const isNeg     = rating <= 2;
   const parts     = [];
 
-  /* 1. Intro */
-  parts.push(pick(PHRASES.intro)(name));
+  const mode = chance(.30) ? "short" : chance(.60) ? "medium" : "long";
 
-  /* 2. Service experience */
-  const expPool = PHRASES.experience[rating] || PHRASES.experience[3];
-  parts.push(pick(expPool)(service, name));
+  /* 1. Intro — skipped in short mode 50% of the time */
+  if (mode !== "short" || chance(.50)) {
+    parts.push(pick(PHRASES.intro)(name));
+  }
 
-  /* 3. Highlights (2–3 picked randomly) */
-  const count      = 2 + (chance(.42) ? 1 : 0);
-  const chosen     = pickN(client.highlights, count);
-  const hlPool     = isPos ? PHRASES.highlights.positive
-                   : isNeutral ? PHRASES.highlights.neutral
-                   : PHRASES.highlights.negative;
+  /* 2. Service experience — uses keyword phrase ~35% of the time */
+  const expPool      = PHRASES.experience[rating] || PHRASES.experience[3];
+  const serviceLabel = _servicePhrase(service);
+  parts.push(pick(expPool)(serviceLabel, name));
 
-  if (chosen.length > 0) {
-    if (chosen.length === 1) {
-      parts.push(pick(hlPool)(chosen[0]));
-    } else if (chance(.5)) {
-      // Combine into one sentence
+  /* short mode stops here — just 1 or 2 sentences */
+  if (mode === "short") {
+    if (chance(.55)) {
+      // add a single closing line
+      if (isPos) parts.push(pick(PHRASES.closing.positive)(name));
+      else if (isNeutral) parts.push(pick(PHRASES.closing.neutral)(name));
+    }
+    return parts.join(" ").replace(/\s{2,}/g, " ").trim();
+  }
+
+  /* 3. Highlights */
+  const hlCount  = mode === "long" ? (1 + (chance(.5) ? 1 : 0)) : 1;
+  const chosen   = pickN(client.highlights, hlCount);
+  const hlPool   = isPos ? PHRASES.highlights.positive
+                 : isNeutral ? PHRASES.highlights.neutral
+                 : PHRASES.highlights.negative;
+
+  if (chosen.length === 1) {
+    parts.push(pick(hlPool)(chosen[0]));
+  } else if (chosen.length > 1) {
+    if (chance(.5)) {
       const joined = chosen.slice(0, -1).join(", ") + " and " + chosen.at(-1);
       parts.push(pick([
-        isPos ? `The ${joined} were all excellent.` : `The ${joined} were areas that stood out.`,
-        isPos ? `Standouts were the ${joined}.` : `I noticed mixed results with the ${joined}.`,
-        `Particularly notable: the ${joined}.`,
+        isPos ? `The ${joined} were both excellent.` : `The ${joined} were areas that stood out.`,
+        isPos ? `Standouts: the ${joined}.`          : `I noticed issues with the ${joined}.`,
       ]));
     } else {
-      // Separate sentences
       parts.push(pick(hlPool)(chosen[0]));
-      if (chosen.length > 1) {
-        const connector = chance(.5) ? pick(PHRASES.connectors) + " " : "";
-        parts.push(connector + pick(hlPool)(chosen[1]));
-      }
+      const connector = chance(.45) ? pick(PHRASES.connectors) + " " : "";
+      parts.push(connector + pick(hlPool)(chosen[1]));
     }
   }
 
-  /* 4. Second sentence (28% chance) */
-  if (chance(.28)) {
+  /* 4. Second sentence — long mode only, 20% chance */
+  if (mode === "long" && chance(.20)) {
     const pool = isPos ? PHRASES.secondSentence.positive
                : isNeutral ? PHRASES.secondSentence.neutral
                : PHRASES.secondSentence.negative;
@@ -278,7 +493,13 @@ function generateReview(client, service, rating) {
     if (isNeg) {
       parts.push(pick(PHRASES.negativeClosing)(name));
     } else if (isPos) {
-      parts.push(pick(PHRASES.closing.positive)(name));
+      const geoThreshold = rating === 5 ? 0.40 : 0.20;
+      if (chance(geoThreshold) && client.geoAreas) {
+        const area = pick(client.geoAreas);
+        parts.push(pick(PHRASES.closing.geo)(name, area));
+      } else {
+        parts.push(pick(PHRASES.closing.positive)(name));
+      }
     } else {
       const pool = chance(.55) ? PHRASES.closing.neutral : PHRASES.closing.positive;
       parts.push(pick(pool)(name));
@@ -338,26 +559,88 @@ function _applyBranding() {
 
 }
 
-  /* ── Service chips ────────────────────────────────────── */
+/* ── Service chips ────────────────────────────────────── */
   function _buildServiceChips() {
     const wrap = document.getElementById("rfServiceChips");
     wrap.innerHTML = "";
-    state.client.services.forEach((svc, i) => {
+
+  const groupStarts = {
+      "Cavity Filling":   "Restorative",
+      "Dental Checkup":   "General & Preventive",
+      "Tooth Extraction": "Surgical",
+      "Teeth Whitening":  "Cosmetic",
+      "Braces / Aligners":"Orthodontic",
+      "Dental Implants":  "Implants & Prosthetics",
+      "Pediatric Dentist":"Specialty",
+    };
+
+    /* scrollable chip sheet */
+    const sheet = document.createElement("div");
+    sheet.className = "rf-chip-sheet";
+
+    let animIdx = 0;
+    state.client.services.forEach((svc) => {
+      if (groupStarts[svc]) {
+        const lbl = document.createElement("div");
+        lbl.className = "rf-chip-group-label";
+        lbl.textContent = groupStarts[svc];
+        sheet.appendChild(lbl);
+      }
       const btn = document.createElement("button");
       btn.className = "rf-chip";
       btn.textContent = svc;
       btn.type = "button";
-      btn.style.animationDelay = (i * 0.04) + "s";
+      btn.style.animationDelay = (animIdx * 0.04) + "s";
       btn.onclick = () => _selectService(svc, btn);
-      wrap.appendChild(btn);
+      sheet.appendChild(btn);
+      animIdx++;
+    });
+    wrap.appendChild(sheet);
+
+    /* custom service input */
+    const customWrap = document.createElement("div");
+    customWrap.className = "rf-custom-service-wrap";
+    customWrap.innerHTML = `
+      <p class="rf-custom-label">Something else? Type it below</p>
+      <div class="rf-custom-row">
+        <input class="rf-custom-input" id="rfCustomService" type="text"
+          placeholder="e.g. Jaw pain, Gum bleeding…" maxlength="60" />
+        <button class="rf-custom-btn" id="rfCustomBtn" type="button">Go →</button>
+      </div>
+    `;
+    wrap.appendChild(customWrap);
+
+    /* Go button — defined here inside the module so toStep() is in scope */
+    document.getElementById("rfCustomBtn").onclick = () => {
+      const val = document.getElementById("rfCustomService").value.trim();
+      if (!val) return;
+      _selectService(val, null);
+    };
+
+    document.getElementById("rfCustomService").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        const val = e.target.value.trim();
+        if (!val) return;
+        _selectService(val, null);
+      }
     });
   }
 
+
   function _selectService(svc, el) {
     document.querySelectorAll(".rf-chip").forEach(c => c.classList.remove("rf-selected"));
-    el.classList.add("rf-selected");
+    if (el) el.classList.add("rf-selected");
+
+    const customInput = document.getElementById("rfCustomService");
+    if (!el && customInput) {
+      customInput.classList.add("rf-custom-selected");
+    } else if (customInput) {
+      customInput.classList.remove("rf-custom-selected");
+      customInput.value = "";
+    }
+
     state.service = svc;
-    document.getElementById("rfStep1Btn").disabled = false;
+    setTimeout(() => toStep(2), 180);
   }
 
   /* ── Rating ───────────────────────────────────────────── */
