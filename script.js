@@ -662,8 +662,10 @@ document.getElementById("rfCustomService").addEventListener("input", (e) => {
       border-bottom: 1px solid var(--border2);
       transition: background 0.15s;
     `;
-    item.onmouseenter = () => item.style.background = "var(--p-soft)";
-    item.onmouseleave = () => item.style.background = "white";
+item.addEventListener("touchstart", () => item.style.background = "var(--p-soft)", {passive:true});
+item.addEventListener("touchend", () => item.style.background = "white", {passive:true});
+item.onmouseenter = () => item.style.background = "var(--p-soft)";
+item.onmouseleave = () => item.style.background = "white";
     item.onmousedown = (ev) => {
       ev.preventDefault();
       document.getElementById("rfCustomService").value = svc;
@@ -684,7 +686,7 @@ document.getElementById("rfCustomService").addEventListener("blur", () => {
   setTimeout(() => {
     const d = document.getElementById("rfServiceDropdown");
     if (d) d.remove();
-  }, 150);
+  }, 300);
 });
      
     document.getElementById("rfCustomService").addEventListener("keydown", (e) => {
