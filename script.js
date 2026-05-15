@@ -820,9 +820,9 @@ function _applyBranding() {
   }
 
   /* ── Private feedback ─────────────────────────────────── */
-  function sharePrivate() {
-    showToast("Private feedback form coming soon 🙏", "info");
-  }
+ function sharePrivate() {
+    window.open("https://docs.google.com/forms/d/e/1FAIpQLScSYa1fBgGgaWwbB3Mu-qW1WlmrmAtyEVjrr-KtRCoUvnNPMg/viewform?usp=publish-editor", "_blank");
+}
 
   return { init, toStep, setRating, sharePrivate };
 })();
