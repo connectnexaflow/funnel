@@ -617,6 +617,40 @@ function _applyBranding() {
       _selectService(val, null);
     };
 
+document.getElementById("rfCustomService").addEventListener("input", (e) => {
+  const val = e.target.value.trim().toLowerCase();
+  const sheet = document.querySelector(".rf-chip-sheet");
+  
+  // Remove previous search results
+  document.querySelectorAll(".rf-chip-search-result").forEach(el => el.remove());
+  
+  if (!val) return;
+  
+  // Find matching services
+  const matches = state.client.services.filter(svc =>
+    svc.toLowerCase().startsWith(val)
+  );
+  
+  if (!matches.length) return;
+  
+  // Insert matched chips at top of sheet
+  const divider = document.createElement("div");
+  divider.className = "rf-chip-group-label rf-chip-search-result";
+  divider.textContent = "Matching Services";
+  sheet.insertBefore(divider, sheet.firstChild);
+  
+  matches.reverse().forEach(svc => {
+    const btn = document.createElement("button");
+    btn.className = "rf-chip rf-chip-search-result";
+    btn.textContent = svc;
+    btn.type = "button";
+    btn.onclick = () => _selectService(svc, btn);
+    sheet.insertBefore(btn, sheet.firstChild);
+  });
+  
+  sheet.scrollTop = 0;
+});
+     
     document.getElementById("rfCustomService").addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
         const val = e.target.value.trim();
