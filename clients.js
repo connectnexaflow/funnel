@@ -25,7 +25,7 @@ const RF_CLIENTS = {
       "Saluja Dentals",
       "Saluja Dental Clinic",
       "Saluja Dental Centre",
-      "the Saluja Dentals team",
+      "saluja dentist",
     ],
     logoText:    "🦷",
     logo:        null,
