@@ -28,7 +28,7 @@ const RF_CLIENTS = {
       "saluja dentist",
     ],
     logoText:    "🦷",
-    logo:        null,
+    logo:        "logo.jpg",
     primaryColor: "#0ea5e9",
     primaryDark:  "#0284c7",
     primarySoft:  "rgba(14,165,233,0.10)",
