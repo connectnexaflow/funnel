@@ -619,36 +619,72 @@ function _applyBranding() {
 
 document.getElementById("rfCustomService").addEventListener("input", (e) => {
   const val = e.target.value.trim().toLowerCase();
-  const sheet = document.querySelector(".rf-chip-sheet");
   
-  // Remove previous search results
-  document.querySelectorAll(".rf-chip-search-result").forEach(el => el.remove());
+  // Remove existing dropdown
+  const existing = document.getElementById("rfServiceDropdown");
+  if (existing) existing.remove();
   
   if (!val) return;
   
-  // Find matching services
   const matches = state.client.services.filter(svc =>
     svc.toLowerCase().startsWith(val)
   );
   
   if (!matches.length) return;
   
-  // Insert matched chips at top of sheet
-  const divider = document.createElement("div");
-  divider.className = "rf-chip-group-label rf-chip-search-result";
-  divider.textContent = "Matching Services";
-  sheet.insertBefore(divider, sheet.firstChild);
+  // Build dropdown
+  const input = document.getElementById("rfCustomService");
+  const dropdown = document.createElement("div");
+  dropdown.id = "rfServiceDropdown";
+  dropdown.style.cssText = `
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 0; right: 0;
+    background: white;
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 -4px 24px rgba(124,58,237,0.13);
+    overflow: hidden;
+    z-index: 999;
+    max-height: 220px;
+    overflow-y: auto;
+  `;
   
-  matches.reverse().forEach(svc => {
-    const btn = document.createElement("button");
-    btn.className = "rf-chip rf-chip-search-result";
-    btn.textContent = svc;
-    btn.type = "button";
-    btn.onclick = () => _selectService(svc, btn);
-    sheet.insertBefore(btn, sheet.firstChild);
+  matches.forEach(svc => {
+    const item = document.createElement("div");
+    item.textContent = svc;
+    item.style.cssText = `
+      padding: 11px 16px;
+      font-size: 0.87rem;
+      font-weight: 600;
+      color: var(--t2);
+      cursor: pointer;
+      border-bottom: 1px solid var(--border2);
+      transition: background 0.15s;
+    `;
+    item.onmouseenter = () => item.style.background = "var(--p-soft)";
+    item.onmouseleave = () => item.style.background = "white";
+    item.onmousedown = (ev) => {
+      ev.preventDefault();
+      document.getElementById("rfCustomService").value = svc;
+      dropdown.remove();
+      _selectService(svc, null);
+    };
+    dropdown.appendChild(item);
   });
   
-  sheet.scrollTop = 0;
+  // Wrap input row in relative position if not already
+  const row = input.closest(".rf-custom-row");
+  row.style.position = "relative";
+  row.appendChild(dropdown);
+});
+
+// Close dropdown on blur
+document.getElementById("rfCustomService").addEventListener("blur", () => {
+  setTimeout(() => {
+    const d = document.getElementById("rfServiceDropdown");
+    if (d) d.remove();
+  }, 150);
 });
      
     document.getElementById("rfCustomService").addEventListener("keydown", (e) => {
