@@ -535,11 +535,15 @@ const RF = (() => {
     _buildServiceChips();
     _updateProgress(1);
     document.title = `Rate ${state.client.name}`;
-       if (new URLSearchParams(window.location.search).get("skip") === "true") {
-    state.service = "General Visit";
-    state.rating  = 5;
-    toStep(3);
-  }
+   if (new URLSearchParams(window.location.search).get("skip") === "true") {
+  state.service = "General Visit";
+  state.rating  = 5;
+  document.getElementById("rfStep1").style.display = "none";
+  document.getElementById("rfStep2").style.display = "none";
+  document.getElementById("rfProgressFill").style.display = "none";
+  document.getElementById("rfProgressLabel").textContent = "";
+  setTimeout(() => toStep(3), 0);
+}
   }
 
   /* ── Branding ─────────────────────────────────────────── */
