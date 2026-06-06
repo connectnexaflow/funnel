@@ -847,31 +847,6 @@ document.getElementById("rfCustomService").addEventListener("blur", () => {
         It takes just 30 seconds and makes a huge difference to our little clinic. We would be truly grateful. 🌟
       </p>
 
-      <!-- Countdown -->
-      <div style="
-        display:inline-flex;
-        align-items:center;
-        gap:8px;
-        background:var(--p-soft);
-        border:1px solid var(--border);
-        border-radius:99px;
-        padding:8px 18px;
-        font-size:.8rem;
-        font-weight:700;
-        color:var(--p);
-        margin-bottom:20px;
-      ">
-        <span>Redirecting to Google in</span>
-        <span id="rfCountdown" style="
-          font-size:1.1rem;
-          font-weight:800;
-          min-width:22px;
-          display:inline-block;
-          text-align:center;
-        ">10</span>
-        <span>sec…</span>
-      </div>
-
       <!-- Post on Google button -->
       <div>
         <a href="${state.client.reviewLink}" target="_blank" rel="noopener noreferrer"
@@ -941,19 +916,6 @@ document.getElementById("rfCustomService").addEventListener("blur", () => {
     `;
     document.head.appendChild(s);
   }
-
-  // Countdown + auto redirect
-  let seconds = 10;
-  const countEl = document.getElementById("rfCountdown");
-  const timer = setInterval(() => {
-    seconds--;
-    if (countEl) countEl.textContent = seconds;
-    if (seconds <= 0) {
-      clearInterval(timer);
-      window.open(state.client.reviewLink, "_blank");
-    }
-  }, 1000);
-}
   /* ── Private feedback ─────────────────────────────────── */
  function sharePrivate() {
     window.open("https://docs.google.com/forms/d/e/1FAIpQLScSYa1fBgGgaWwbB3Mu-qW1WlmrmAtyEVjrr-KtRCoUvnNPMg/viewform?usp=publish-editor", "_blank");
