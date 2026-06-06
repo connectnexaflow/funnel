@@ -795,102 +795,165 @@ document.getElementById("rfCustomService").addEventListener("blur", () => {
   }
 
   /* ── Build carousel on step 3 ─────────────────────────── */
-  function _buildReviewCarousel() {
-    const carousel = document.getElementById("rfCarousel");
-    const dotsWrap = document.getElementById("rfCarouselDots");
-    if (!carousel) return;
+ function _buildReviewCarousel() {
+  const carousel = document.getElementById("rfCarousel");
+  const dotsWrap = document.getElementById("rfCarouselDots");
+  const step3 = document.getElementById("rfStep3");
+  if (!step3) return;
 
-    carousel.innerHTML = "";
-    if (dotsWrap) dotsWrap.innerHTML = "";
+  // Replace step 3 content entirely with thank-you screen
+  step3.innerHTML = `
+    <div style="text-align:center;padding:10px 4px 20px;position:relative;z-index:1;">
+      
+      <!-- Animated heart / thank you icon -->
+      <div style="font-size:3.5rem;margin-bottom:16px;animation:heartPop .6s cubic-bezier(.34,1.56,.64,1) both;">
+        🦷💙
+      </div>
 
-    const stars  = "★".repeat(state.rating) + "☆".repeat(5 - state.rating);
-    const labels = { 5:"Excellent ✨", 4:"Good 👍", 3:"Okay 🙂", 2:"Poor 😕", 1:"Very Poor 😞" };
+      <!-- Heading -->
+      <h2 style="
+        font-family:'DM Serif Display',Georgia,serif;
+        font-size:1.6rem;
+        font-weight:400;
+        color:var(--t1);
+        line-height:1.25;
+        margin-bottom:12px;
+        letter-spacing:-.02em;
+      ">
+        Thank You for Visiting<br/>
+        <em style="color:var(--p);">${state.client.name}</em>
+      </h2>
 
-    const badge = document.getElementById("rfRatingBadge");
-    if (badge) {
-      badge.innerHTML =
-        `<span style="color:#f59e0b;letter-spacing:3px;font-size:1rem">${stars}</span>
-         <span style="font-size:.82rem;font-weight:700;color:var(--p)">${labels[state.rating]} — ${state.service}</span>`;
-    }
+      <!-- Message -->
+      <p style="
+        font-size:.9rem;
+        color:var(--t2);
+        line-height:1.75;
+        max-width:320px;
+        margin:0 auto 10px;
+        font-weight:500;
+      ">
+        Your visit means the world to us. 🙏<br/>
+        We work hard every day to provide the best care — and a genuine review from you helps other families in Kanpur find trusted dental care.
+      </p>
 
-    // Generate 3 review variants
-    const reviews = [];
-    for (let i = 0; i < 3; i++) {
-      reviews.push(generateReview(state.client, state.service, state.rating));
-    }
-    state.review = reviews[0];
+      <p style="
+        font-size:.82rem;
+        color:var(--t3);
+        line-height:1.65;
+        max-width:300px;
+        margin:0 auto 24px;
+      ">
+        It takes just 30 seconds and makes a huge difference to our little clinic. We would be truly grateful. 🌟
+      </p>
 
-    reviews.forEach((text, i) => {
-      // Card
-      const card = document.createElement("div");
-      card.className = "rf-review-card";
-      card.innerHTML = `
-        <div class="rf-card-copied-overlay">
-          <span class="rf-copied-icon">✅</span>
-          <span class="rf-copied-text">Copied! Opening Google…</span>
-        </div>
-        <div class="rf-card-header">
-          <span class="rf-card-num">Option ${i + 1}</span>
-          <span class="rf-card-tap">
-            <svg width="13" height="13" viewBox="0 0 20 20" fill="none">
-              <rect x="7" y="7" width="10" height="11" rx="2" stroke="currentColor" stroke-width="1.9"/>
-              <path d="M13 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
-            </svg>
-            Tap to post
+      <!-- Countdown -->
+      <div style="
+        display:inline-flex;
+        align-items:center;
+        gap:8px;
+        background:var(--p-soft);
+        border:1px solid var(--border);
+        border-radius:99px;
+        padding:8px 18px;
+        font-size:.8rem;
+        font-weight:700;
+        color:var(--p);
+        margin-bottom:20px;
+      ">
+        <span>Redirecting to Google in</span>
+        <span id="rfCountdown" style="
+          font-size:1.1rem;
+          font-weight:800;
+          min-width:22px;
+          display:inline-block;
+          text-align:center;
+        ">10</span>
+        <span>sec…</span>
+      </div>
+
+      <!-- Post on Google button -->
+      <div>
+        <a href="${state.client.reviewLink}" target="_blank" rel="noopener noreferrer"
+          style="
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            gap:10px;
+            background:linear-gradient(135deg,var(--p),var(--p-dark));
+            color:#fff;
+            font-family:'Sora',sans-serif;
+            font-size:.95rem;
+            font-weight:700;
+            padding:14px 32px;
+            border-radius:99px;
+            text-decoration:none;
+            box-shadow:var(--sh-p);
+            transition:all .2s;
+            width:100%;
+            max-width:320px;
+            letter-spacing:.01em;
+          "
+          onmouseover="this.style.transform='translateY(-2px)';this.style.filter='brightness(1.07)'"
+          onmouseout="this.style.transform='';this.style.filter=''"
+        >
+          <span style="display:flex;gap:2px;font-size:.75rem;">
+            <span style="color:#4285F4">●</span>
+            <span style="color:#EA4335">●</span>
+            <span style="color:#FBBC05">●</span>
+            <span style="color:#34A853">●</span>
           </span>
-        </div>
-        <p class="rf-card-text">${text}</p>
-        <div class="rf-card-footer">
-          <span class="rf-card-stars">${stars}</span>
-        </div>`;
+          Post on Google
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+            <path d="M4 10h12M12 6l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
 
-      card.onclick = () => _copyCard(card, text);
-      carousel.appendChild(card);
+      <!-- Back link -->
+      <div style="margin-top:18px;">
+        <button onclick="RF.toStep(2)"
+          style="
+            background:transparent;
+            border:none;
+            font-family:'Sora',sans-serif;
+            font-size:.78rem;
+            font-weight:700;
+            color:var(--t3);
+            cursor:pointer;
+            padding:8px;
+          "
+        >← Change rating</button>
+      </div>
+    </div>
+  `;
 
-      // Dot
-      if (dotsWrap) {
-        const dot = document.createElement("div");
-        dot.className = "rf-dot" + (i === 0 ? " rf-dot-active" : "");
-        dot.onclick = () => {
-          carousel.scrollTo({ left: card.offsetLeft - 4, behavior: "smooth" });
-        };
-        dotsWrap.appendChild(dot);
+  // Add heartPop keyframe if not already added
+  if (!document.getElementById("rfHeartStyle")) {
+    const s = document.createElement("style");
+    s.id = "rfHeartStyle";
+    s.textContent = `
+      @keyframes heartPop {
+        0%   { transform: scale(0) rotate(-10deg); opacity: 0; }
+        70%  { transform: scale(1.15) rotate(3deg); opacity: 1; }
+        100% { transform: scale(1) rotate(0deg); opacity: 1; }
       }
-    });
-
-    // Update dots on scroll
-    carousel.addEventListener("scroll", () => {
-      const dots = dotsWrap ? dotsWrap.querySelectorAll(".rf-dot") : [];
-      const index = Math.round(carousel.scrollLeft / carousel.offsetWidth);
-      dots.forEach((d, i) => d.classList.toggle("rf-dot-active", i === index));
-    });
+    `;
+    document.head.appendChild(s);
   }
 
-  async function _copyCard(card, text) {
-    card.classList.add("rf-card-copying");
-    try {
-      await navigator.clipboard.writeText(text);
-    } catch {
-      try {
-        const ta = document.createElement("textarea");
-        ta.value = text;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand("copy");
-        document.body.removeChild(ta);
-      } catch {
-        document.getElementById("rfManualFallback").style.display = "block";
-        card.classList.remove("rf-card-copying");
-        return;
-      }
-    }
-    showToast("Copied! Opening Google Reviews…", "success");
-    setTimeout(() => {
+  // Countdown + auto redirect
+  let seconds = 10;
+  const countEl = document.getElementById("rfCountdown");
+  const timer = setInterval(() => {
+    seconds--;
+    if (countEl) countEl.textContent = seconds;
+    if (seconds <= 0) {
+      clearInterval(timer);
       window.open(state.client.reviewLink, "_blank");
-      card.classList.remove("rf-card-copying");
-    }, 1200);
-  }
-
+    }
+  }, 1000);
+}
   /* ── Private feedback ─────────────────────────────────── */
  function sharePrivate() {
     window.open("https://docs.google.com/forms/d/e/1FAIpQLScSYa1fBgGgaWwbB3Mu-qW1WlmrmAtyEVjrr-KtRCoUvnNPMg/viewform?usp=publish-editor", "_blank");
