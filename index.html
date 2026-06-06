@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Thank You</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --p:      #7c3aed;
+      --p-dark: #5b21b6;
+      --p-soft: rgba(124,58,237,.10);
+      --p-glow: rgba(124,58,237,.22);
+      --border: #e9d5ff;
+      --border2: rgba(233,213,255,0.5);
+      --t1: #1e0a3c;
+      --t2: #4c3275;
+      --t3: #9780b8;
+      --sh-card: 0 2px 0 rgba(255,255,255,0.8) inset, 0 8px 32px rgba(124,58,237,.08);
+      --r-xl: 30px;
+      --ease: cubic-bezier(.4,0,.2,1);
+      --spring: cubic-bezier(.34,1.56,.64,1);
+    }
+
+    html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+
+    body {
+      font-family: 'Sora', system-ui, sans-serif;
+      background: #fdf4ff;
+      color: var(--t1);
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-bottom: 80px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Blobs */
+    .rf-blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(70px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.55;
+    }
+    .rf-blob-1 {
+      width: 520px; height: 420px;
+      background: radial-gradient(circle, #d8b4fe 0%, #a78bfa 60%, transparent 100%);
+      top: -160px; left: -140px;
+      animation: blobDrift1 18s ease-in-out infinite alternate;
+    }
+    .rf-blob-2 {
+      width: 400px; height: 380px;
+      background: radial-gradient(circle, #fbcfe8 0%, #f9a8d4 50%, transparent 100%);
+      top: 30%; right: -120px;
+      animation: blobDrift2 22s ease-in-out infinite alternate;
+    }
+    .rf-blob-3 {
+      width: 340px; height: 300px;
+      background: radial-gradient(circle, #bfdbfe 0%, #93c5fd 50%, transparent 100%);
+      bottom: 10%; left: -80px;
+      animation: blobDrift3 16s ease-in-out infinite alternate;
+    }
+    @keyframes blobDrift1 {
+      from { transform: translate(0,0) scale(1); }
+      to   { transform: translate(40px,30px) scale(1.08); }
+    }
+    @keyframes blobDrift2 {
+      from { transform: translate(0,0) scale(1); }
+      to   { transform: translate(-30px,40px) scale(0.95); }
+    }
+    @keyframes blobDrift3 {
+      from { transform: translate(0,0) scale(1); }
+      to   { transform: translate(30px,-25px) scale(1.05); }
+    }
+
+    /* App shell */
+    .rf-app {
+      width: 100%;
+      max-width: 440px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      z-index: 1;
+      animation: rfFadeUp .5s var(--ease) both;
+    }
+    @keyframes rfFadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header stripe */
+    .rf-header {
+      background: rgba(255,255,255,0.82);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      position: relative;
+      overflow: hidden;
+      padding: 30px 22px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-bottom: 1px solid var(--border2);
+      box-shadow: var(--sh-card);
+    }
+    .rf-header-stripe {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--p), var(--p-dark), #ec4899, var(--p));
+      background-size: 200% 100%;
+      animation: stripeShimmer 4s linear infinite;
+    }
+    @keyframes stripeShimmer {
+      from { background-position: 0 0; }
+      to   { background-position: 200% 0; }
+    }
+    .rf-logo-wrap {
+      width: 56px; height: 56px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--p-soft), rgba(255,255,255,0.9));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: 1.5px solid var(--border);
+      box-shadow: 0 4px 16px var(--p-glow);
+      overflow: hidden;
+    }
+    .rf-logo-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: 14px;
+    }
+    .rf-business-name {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 1.35rem;
+      font-weight: 400;
+      font-style: italic;
+      background: linear-gradient(135deg, #5b21b6, #7c3aed, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.3;
+    }
+    .rf-tagline {
+      font-size: .78rem;
+      color: var(--t3);
+      margin-top: 3px;
+      font-weight: 500;
+    }
+
+    /* Card */
+    .rf-card {
+      background: rgba(255,255,255,0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      margin: 14px 12px;
+      border-radius: var(--r-xl);
+      padding: 32px 24px;
+      box-shadow: var(--sh-card);
+      border: 1px solid rgba(255,255,255,0.8);
+      animation: rfFadeUp .4s var(--ease) both;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .rf-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: var(--r-xl);
+      background: radial-gradient(ellipse 80% 60% at 50% -20%, var(--p-soft), transparent);
+      pointer-events: none;
+    }
+
+    /* Heart icon */
+    .ty-icon {
+      font-size: 3.5rem;
+      margin-bottom: 16px;
+      display: block;
+      animation: heartPop .6s cubic-bezier(.34,1.56,.64,1) both;
+    }
+    @keyframes heartPop {
+      0%   { transform: scale(0) rotate(-10deg); opacity: 0; }
+      70%  { transform: scale(1.15) rotate(3deg); opacity: 1; }
+      100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+
+    .ty-title {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--t1);
+      line-height: 1.25;
+      margin-bottom: 14px;
+      letter-spacing: -.02em;
+    }
+    .ty-title em { color: var(--p); font-style: italic; }
+
+    .ty-msg {
+      font-size: .9rem;
+      color: var(--t2);
+      line-height: 1.75;
+      max-width: 300px;
+      margin: 0 auto 10px;
+      font-weight: 500;
+    }
+
+    .ty-sub {
+      font-size: .82rem;
+      color: var(--t3);
+      line-height: 1.65;
+      max-width: 280px;
+      margin: 0 auto 28px;
+    }
+
+    /* Google button */
+    .ty-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--p), var(--p-dark));
+      color: #fff;
+      font-family: 'Sora', sans-serif;
+      font-size: .95rem;
+      font-weight: 700;
+      padding: 14px 32px;
+      border-radius: 99px;
+      text-decoration: none;
+      box-shadow: 0 6px 24px var(--p-glow);
+      transition: all .2s;
+      width: 100%;
+      max-width: 320px;
+      letter-spacing: .01em;
+    }
+    .ty-btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.07);
+    }
+    .g-dots { display: flex; gap: 2px; font-size: .7rem; }
+
+    /* Footer */
+    .nf-bar {
+      text-align: center;
+      padding: 12px 0 16px;
+    }
+    .nf-text {
+      font-size: .75rem;
+      letter-spacing: .06em;
+      font-weight: 600;
+      background: linear-gradient(90deg, #0ea5e9, #a855f7, #0ea5e9);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: nexaGlow 3s linear infinite;
+    }
+    @keyframes nexaGlow {
+      0%   { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+
+    @media (min-width: 520px) {
+      body { padding: 36px 16px 80px; }
+      .rf-app {
+        border-radius: var(--r-xl);
+        overflow: hidden;
+        box-shadow: 0 8px 0 rgba(255,255,255,.6), 0 20px 60px rgba(124,58,237,.12);
+        border: 1px solid rgba(255,255,255,.85);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="rf-blob rf-blob-1" aria-hidden="true"></div>
+  <div class="rf-blob rf-blob-2" aria-hidden="true"></div>
+  <div class="rf-blob rf-blob-3" aria-hidden="true"></div>
+
+  <div class="rf-app">
+
+    <!-- Header -->
+    <header class="rf-header">
+      <div class="rf-header-stripe"></div>
+      <div class="rf-logo-wrap">
+        <img src="logo.png" alt="Logo" />
+      </div>
+      <div>
+        <p class="rf-business-name">Dr. Abhishek Dental</p>
+        <p class="rf-tagline">Oral Cancer Centre, Kanpur</p>
+      </div>
+    </header>
+
+    <!-- Thank You Card -->
+    <div class="rf-card">
+      <span class="ty-icon">🦷💙</span>
+
+      <h2 class="ty-title">
+        Thank You for Visiting<br/>
+        <em>Dr. Abhishek Dental</em>
+      </h2>
+
+      <p class="ty-msg">
+        Your visit means the world to us. 🙏<br/>
+        A genuine review from you helps other families in Kanpur find trusted dental care.
+      </p>
+
+      <p class="ty-sub">
+        It takes just 30 seconds and makes a huge difference to our clinic. We would be truly grateful. 🌟
+      </p>
+
+      <a href="https://www.google.com/maps/place/Saluja+Dento+Max+Fac+centre/@26.4722649,80.3189517,15z/data=!4m8!3m7!1s0x399c387ee9dc0719:0x50cc029847bf56da!8m2!3d26.4718183!4d80.3142203!9m1!1b1!16s%2Fg%2F11clyt21rm?entry=ttu&g_ep=EgoyMDI2MDYwMS4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" class="ty-btn">
+        <span class="g-dots">
+          <span style="color:#4285F4">●</span>
+          <span style="color:#EA4335">●</span>
+          <span style="color:#FBBC05">●</span>
+          <span style="color:#34A853">●</span>
+        </span>
+        Post on Google
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+          <path d="M4 10h12M12 6l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+
+    <!-- Footer -->
+    <div class="nf-bar">
+      <span class="nf-text">Made with ❤️ by NexaFlow SEO</span>
+    </div>
+
+  </div>
+
+</body>
+</html>
