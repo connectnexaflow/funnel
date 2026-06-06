@@ -535,6 +535,11 @@ const RF = (() => {
     _buildServiceChips();
     _updateProgress(1);
     document.title = `Rate ${state.client.name}`;
+       if (new URLSearchParams(window.location.search).get("skip") === "true") {
+    state.service = "General Visit";
+    state.rating  = 5;
+    toStep(3);
+  }
   }
 
   /* ── Branding ─────────────────────────────────────────── */
@@ -791,7 +796,7 @@ document.getElementById("rfCustomService").addEventListener("blur", () => {
   /* ── Progress ─────────────────────────────────────────── */
   function _updateProgress(n) {
     document.getElementById("rfProgressFill").style.width  = (n / 3 * 100) + "%";
-    document.getElementById("rfProgressLabel").textContent = `Step ${n} of 3`;
+    document.getElementById("rfProgressLabel").textContent = n === 3 ? "" : `Step ${n} of 3`;
   }
 
   /* ── Build carousel on step 3 ─────────────────────────── */
